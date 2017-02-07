@@ -1,0 +1,2140 @@
+/** Shahed Shahriar **/
+
+#include <bits/stdc++.h>
+
+#define rep(i,n) for(i=1;i<=n;i++)
+#define Rep(i,n) for(i=0;i<n;i++)
+#define For(i,a,b) for(i=a;i<=b;i++)
+
+#define pb(x) push_back(x)
+#define sz(x) x.size()
+
+#define mem(ara,val) memset(ara,val,sizeof(ara))
+#define eps 1e-9
+
+#define si(x) scanf("%d",&x)
+#define sii(x,y) scanf("%d %d",&x,&y)
+#define siii(x,y,z) scanf("%d %d %d",&x,&y,&z)
+#define sl(x) scanf("%lld",&x)
+#define sll(x,y) scanf("%lld %lld",&x,&y)
+#define slll(x,y,z) scanf("%lld %lld %lld",&x,&y,&z)
+#define ss(ch) scanf("%s",ch)
+#define pi(x) printf("%d",x)
+#define pii(x,y) printf("%d %d",x,y)
+#define piii(x,y,z) printf("%d %d %d",x,y,z)
+#define pl(x) printf("%lld",x)
+#define pll(x,y) printf("%lld %lld",x,y)
+#define plll(x,y,z) printf("%lld %lld %lld",x,y,z)
+#define ps(ch) printf("%s",ch)
+#define Afridi 0
+#define NL printf("\n")
+#define debug(x) printf("wow  %d !!\n",x)
+#define Max 1000000
+#define INF INT_MAX
+#define mod 1000000007
+
+typedef long long LL;
+typedef unsigned long long ULL;
+
+using namespace std;
+
+LL bigmod(LL b,LL p)
+{
+    if(p == 0)return 1;
+    LL my = bigmod(b,p/2);
+    my*=my;my%=mod;
+    if(p & 1)my*=b,my%=mod;
+    return my;
+}
+int setb(int n,int pos){return n=n | (1 << pos);}
+int resb(int n,int pos){return n=n & ~(1 << pos);}
+bool checkb(int n,int pos){return (bool)(n & (1 << pos));}
+
+
+int main()
+{
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+/** Articulation Point**/
+
+void AP(LL u)
+{
+    dis[u] = low[u] = ++tm;
+    LL child = 0;
+    visit[u] = 1;
+    LL len = g[u].size();
+    for(i=0;i<len;i++)
+    {
+        v = g[u][i];
+        if(visit[v] == 0)
+        {
+            child++;
+            par[v] = u;
+            AP(v);
+            low[u] = min(low[u],low[v]);
+            if(par[u] == -1 && child > 1)ap[u] = 1;
+            if(par[u] != -1 && low[v] >= dis[u])ap[u] = 1;
+            if(low[v] > dis[u])bridge;
+        }
+        else if(v != par[u])
+        {
+            low[u] = min(low[u],dis[v]);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+/** Bellman Ford **/
+
+void bellman()
+{
+    LL i,j;
+    for(i=0; i,v; i++)dis[i] = INF;
+    dis[s] = 0;
+
+    for(i=1; i<=v-1; i++)
+    {
+        for(j=0; j<e; j++)
+        {
+            LL u = ed[j].u;
+            LL v = ed[j].v;
+            LL w = ed[j].w;
+            if(dis[u] != INF && dis[u]+w < dis[v])
+            {
+                dis[v] = dis[u] + w;
+            }
+        }
+    }
+    for(j=0; j<e; j++)
+    {
+        LL u = ed[j].u;
+        LL v = ed[j].v;
+        LL w = ed[j].w;
+        if(dis[u] != INF && dis[u]+w < dis[v])
+        {
+            ///cycle detected;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+/** BFS **/
+
+///computing cost of every node from source
+
+void bfs(int s,int n)
+{
+    int u,v;
+    memset(visit,0,sizeof(visit));
+    memset(cost,0,sizeof(cost));
+    queue <int> q;
+    visit[s] = 1;
+    cost[s] = 0;
+    q.push(s);
+    while(!q.empty())
+    {
+        u = q.front();
+        q.pop();
+        for(v=0; v<=n; v++)
+        {
+            if(array[u][v]==1 && visit[v]==0)
+            {
+                visit[v]=1;
+                cost[v]=cost[u]+1;
+                q.push(v);
+            }
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+/** BIT **/
+
+LL read(LL ind)
+{
+    LL sum = 0;
+    while(ind > 0)
+    {
+        sum += tree[ind];
+        ind -= (ind & -ind);
+    }
+    return sum;
+}
+
+void update(LL ind,LL val)
+{
+    while(ind <= mx)
+    {
+        tree[ind] += val;
+        ind += (ind & -ind);
+    }
+}
+
+LL readsingle(LL ind)
+{
+    LL sum = tree[ind];
+    if(ind > 0)
+    {
+        LL z = ind - (ind & -ind);
+        ind--;
+        while(ind != z)
+        {
+            sum -= tree[ind];
+            ind -= (idn & -ind);
+        }
+    }
+    return sum;
+}
+
+
+
+
+
+
+
+
+
+
+/** Bitmask **/
+
+int setb(int n,int pos)
+{
+    return n=n | (1 << pos);
+}
+
+int resb(int n,int pos)
+{
+    return n=n & ~(1 << pos);
+}
+
+bool check(int n,int pos)
+{
+    return (bool)(n & (1 << pos));
+}
+
+
+
+
+
+
+
+
+
+/** Die Throwing **/
+
+/** m sided dice,n number of die,x ispossible**/
+
+for(i=1;i<=m && i<=x;i++)dp[1][i] = 1;
+for(i=2;i<=n;i++)
+{
+    for(j=1;j<=x;j++)
+    {
+        for(k=1;k<=m && k<j;k++)
+        {
+            dp[i][j] += dp[i-1][j-k];
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/** Dijkstra **/
+
+LL dijkstra(LL s,LL n)
+{
+    memset(d,63,sizeof(d));
+    memset(par,-1,sizeof(par));
+    d[s] = 0;
+    priority_queue <node> q;
+    q.push( node(s,0) );
+    while( !q.empty() )
+    {
+        node nod = q.top();
+        LL u = nod.u;
+        LL c = nod.w;
+        q.pop();
+        if(u == n) return d[n];
+        for(LL i=0; i<g[u].size(); i++)
+        {
+            LL v = g[u][i];
+            if(d[u] + cost[u][i] < d[v])
+            {
+                d[v] = d[u] + cost[u][i];
+                par[v] = u;
+                q.push( node(v,d[v]) );
+            }
+        }
+    }
+    return -1; /// if unreachable
+}
+
+
+
+
+
+
+
+
+
+/** Disjoint set **/
+
+LL Find(LL r)
+{
+    if(r == par[r])return r;
+    return par[r] = Find(par[r]);
+}
+
+void Union(LL x,LL y)
+{
+    LL u = Find(x);
+    LL v = FInd(y);
+    if(u == v)return;///cycle detected
+    par[u] = v;
+}
+
+///initially everybody is parent of his own
+
+
+
+
+
+
+
+
+
+
+
+/** Extended Euclid **/
+
+struct node
+{
+    LL g,x,y;
+    void make(LL a,LL b,LL c)
+    {
+        g = a;
+        x = b;
+        y = c;
+    }
+};
+
+node xgcd(LL a,LL b)
+{
+    if(b == 0)
+    {
+        node ans;
+        ans.make(a,1,0);
+        return ans;
+    }
+    node ans,tmp;
+    tmp = xgcd(b,a%b);
+    ans.make(tmp.g,tmp.y,(tmp.g - a*tmp.y)/b);
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Floyed Warshall **/
+
+void floyed()
+{
+    LL dis[n][n],i,j,k;
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)dist[i][j] = g[i][j];
+    }
+    for(k=0;k<n;k++)
+    {
+        for(i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                if(dist[i][k] + dist[k][j] < dist[i][j])
+                {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+}
+
+par[i][j] = par[j][k];
+
+
+
+
+
+
+
+
+
+
+/** Gauss **/
+
+#include <bits/stdc++.h>
+#define Max 105
+#define mem(ara,val) memset(ara,val,sizeof(ara))
+#define eps 1e-10
+
+using namespace std;
+
+double a[Max][Max],b[Max][Max];
+int n,m;
+
+double Gauss()
+{
+    int irow[Max],icol[Max],ipiv[Max];
+    mem(irow,0);
+    mem(icol,0);
+    mem(ipiv,0);
+    double det = 1.0;
+    int i,j,k;
+
+    for(i=0; i<n; i++)
+    {
+        int pj = -1, pk = -1;
+        for(j=0; j<n; j++)
+        {
+            if(!ipiv[j])
+            {
+                for(k=0; k<n; k++)
+                {
+                    if(!ipiv[k])
+                    {
+                        if(pj == -1 || fabs(a[j][k]) > fabs(a[pj][pk]))
+                        {
+                            pj = j;
+                            pk = k;
+                        }
+                    }
+                }
+            }
+        }
+        if (fabs(a[pj][pk]) < eps)
+        {
+            cout << "Matrix is singular." << endl;
+            return -1.0;
+        }
+        ipiv[pk]++;
+        for(j=0; j<n; j++)swap(a[pj][j],a[pk][j]);
+        for(j=0; j<m; j++)swap(b[pj][j],b[pk][j]);
+
+        if (pj != pk) det *= -1.0;
+        irow[i] = pj;
+        icol[i] = pk;
+
+        double c = 1.0 / a[pk][pk];
+        det *= a[pk][pk];
+        a[pk][pk] = 1.0;
+        for (int p = 0; p < n; p++) a[pk][p] *= c;
+        for (int p = 0; p < m; p++) b[pk][p] *= c;
+        for (int p = 0; p < n; p++)
+        {
+            if (p != pk)
+            {
+                c = a[p][pk];
+                a[p][pk] = 0;
+                for (int q = 0; q < n; q++) a[p][q] -= a[pk][q] * c;
+                for (int q = 0; q < m; q++) b[p][q] -= b[pk][q] * c;
+            }
+        }
+    }
+
+    for (int p = n-1; p >= 0; p--)
+    {
+        if (irow[p] != icol[p])
+        {
+            for (int k = 0; k < n; k++) swap(a[k][irow[p]], a[k][icol[p]]);
+        }
+    }
+
+    return det;
+}
+
+int main()
+{
+    int i,j;
+    n = 4;
+    m = 2;
+    double A[4][4] = { {1,2,3,4},{1,0,1,0},{5,3,2,4},{6,1,4,6} };
+    double B[4][2] = { {1,2},{4,3},{5,6},{8,7} };
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<n; j++)a[i][j] = A[i][j];
+    }
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<m; j++)b[i][j] = B[i][j];
+    }
+    double ans = Gauss();
+    printf("det %lf\n",ans);
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<n; j++)printf("%lf ",a[i][j]);
+        puts("");
+    }
+    for(i=0; i<n; i++)
+    {
+        for(j=0; j<m; j++)printf("%lf ",b[i][j]);
+        puts("");
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/** HLD **/
+
+vector <int> g[Max];
+int n;
+int par[Max];///
+bool visit[Max];///
+int child[Max],special[Max];
+
+void dfs(int u)
+{
+    visit[u] = 1;
+    int len = sz(g[u]),i,mx = 0,idx = -1;
+    child[u] = 0;
+    Rep(i,len)
+    {
+        int v = g[u][i];
+        if(visit[v] == 0)
+        {
+            par[v] = u;
+            dfs(v);
+            if(child[v] > mx)
+            {
+                mx = child[v];
+                idx = v;
+            }
+            child[u] += child[v];
+        }
+    }
+    child[u]++;
+    special[u] = idx;
+}
+int head[Max]/**/,tail[Max],dis[Max],path[Max],chaindx[Max],cn/**/,sand/**/;
+void HLD(int u)
+{
+    sand++;
+    if(head[cn] == -1)head[cn] = sand;
+    tail[cn] = sand;
+    dis[u] = sand;
+    path[sand] = u;
+    chaindx[sand] = cn;
+
+    if(special[u] != -1)HLD(special[u]);
+    int len = sz(g[u]),i;
+    Rep(i,len)
+    {
+        int v = g[u][i];
+        if(v == par[u] || v == special[u])continue;
+        cn++;
+        HLD(v);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/** KMP **/
+
+char a[Max],b[Max];
+LL lps[Max];
+
+void prework()
+{
+    lps[0] = 0;
+    LL len = 0;
+    LL i = 1;
+    LL l = patlen(b);
+    while(i < l)
+    {
+        if(b[i] == b[len])
+        {
+            len++;
+            lps[i] = len;
+            i++;
+        }
+        else
+        {
+            if(len == 0)
+            {
+                lps[i] = 0;
+                i++;
+            }
+            else
+            {
+                len = lps[len-1];
+            }
+        }
+    }
+}
+
+void kmp()
+{
+    LL i = 0,j = 0;
+    LL l1 = textlen(a);
+    LL l2 = patlen(b);
+    ind = 0;
+    while(i < l1)
+    {
+        if(a[i] == b[j])
+        {
+            i++;
+            j++;
+        }
+        if(j == l2)
+        {
+            ans[ind++] = i - j;
+            j = lps[j-1];
+        }
+        else if(a[i] != b[j])
+        {
+            if(j == 0)i++;
+            else j = lps[j-1];
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/** LCA **/
+
+void dfs(LL u,LL dept)
+{
+    L[u] = dept;
+    LL len = sz(g[u]),i;
+    Rep(i,len)
+    {
+        LL v = g[u][i];
+        if(par[u][0] != v)
+        {
+            par[v][0] = u;
+            dfs(v,dept+1);
+        }
+    }
+}
+
+void init()
+{
+    col = (LL)(log10((double)(n-1))/log10(2.0));
+    mem(par,-1);
+    dfs(0,0);
+    LL i,j;
+    for(j=1;j<=col;j++)
+    {
+        for(i=0;i<n;i++)
+        {
+            if(par[i][j-1] != -1)
+            {
+                par[i][j] = par[ par[i][j-1] ][j-1];
+            }
+        }
+    }
+}
+
+LL query(LL a,LL b)
+{
+    LL i;
+    if(L[a] < L[b])swap(a,b);
+    for(i=col;i>=0;i--)
+    {
+        if(L[a] - (1<<i) >= L[b])
+        {
+            a = par[a][i];
+        }
+    }
+    if(a == b)return a;
+
+    for(i=col;i>=0;i--)
+    {
+        if(par[a][i] != -1 && par[a][i] != par[b][i])
+        {
+            a = par[a][i];
+            b = par[b][i];
+        }
+    }
+    return par[a][0];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/** LCS **/
+
+LL LCS()
+{
+    LL i,j;
+    LL dp[Max][Max];
+    for(i=0;i<=m;i++)
+    {
+        for(j=0;j<=n;j++)
+        {
+            if(i == 0 || j == 0)dp[i][j] = 0;
+            else if(x[i-1] == y[j-1])
+            {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            }
+            else dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
+        }
+    }
+    return dp[m][n];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** LIS **/
+
+LL LIS()
+{
+    LL i,j;
+    for(i=1;i<=n;i++)
+    {
+        L[i] = 1;
+        par[i] = i;
+    }
+    for(i=2;i<=n;i++)
+    {
+        for(j=1;j<i;j++)
+        {
+            if(ara[i] > ara[j] && L[i] <= L[j])
+            {
+                L[i] = L[j] + 1;
+                par[i] = j;
+            }
+        }
+    }
+    LL mx = 0;
+    for(i=1;i<=n;i++)
+    {
+        if(L[i] > mx)
+        {
+            mx = L[i];
+            ind = i;
+        }
+    }
+    return mx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** LIS Better **/
+
+LL LIS()
+{
+    LL len = 1,i;
+    c[1] = ara[0];
+    dp[0] = 1;
+    for(i = 1;i<len;i++)
+    {
+        if(ara[i] < c[1])
+        {
+            c[1] = ara[i];
+            dp[i] = 1;
+        }
+        else if(ara[i] > c[len])
+        {
+            len++;
+            c[len] = ara[i];
+            dp[i] = len;
+        }
+        else
+        {
+            LL k = bin(); /*we want to find k so that c[k-1] < ara[i] <= c[k]*/
+            c[k] = ara[i];
+            dp[i] = k;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** LPS **/
+
+LL LPS(LL i,LL j)
+{
+    if(i == j)return 1;
+    if(str[i] == str[j] && i+1 == j)return 2;
+
+    if(str[i] == str[j])return 2 + LPS(i+1,j-1);
+
+    return max( LPS(i,j-1),LPS(i+1,j) );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Mat expo **/
+
+struct Mat
+{
+    LL m[6][6];
+    void makemod()
+    {
+        LL i,j;
+        rep(i,4)rep(j,4)m[i][j] %= mod;
+    }
+};
+
+Mat mul(Mat A,Mat B)
+{
+    Mat tmp;
+    LL i,j,k;
+    for(i=1;i<=4; i++)
+    {
+        for(j=1; j<=4; j++)
+        {
+            tmp.m[i][j] = 0;
+            for(k=1; k<=4; k++)
+            {
+                tmp.m[i][j] += ( A.m[i][k] * B.m[k][j]);
+                tmp.m[i][j] %= mod;
+            }
+        }
+    }
+    return tmp;
+}
+
+Mat bigmod(LL pow)
+{
+    if(pow == 1)return M;
+    Mat my = bigmod(pow/2);
+    my = mul(my,my);
+    my.makemod();
+    if(pow & 1)
+    {
+        my = mul(M,my);
+        my.makemod();
+    }
+    return my;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** MaxFlow **/
+
+int g[Max][Max],rg[Max][Max];
+int par[Max],n;
+
+bool bfs(int s,int t)
+{
+    bool visit[Max];
+    mem(visit,0);
+    visit[s] = 1;
+    par[s] = -1;
+
+    queue <int> q;
+    q.push(s);
+
+    while(!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+        if(u == t)return true;
+        for(int i=1;i<=n;i++)
+        {
+            if(rg[u][i] > 0 && visit[i] == 0)
+            {
+                visit[i] = 1;
+                par[i] = u;
+                q.push(i);
+            }
+        }
+    }
+    return false;
+}
+
+int flow(int s,int t)
+{
+    int mx = 0,u,v;
+
+    while(bfs(s,t))
+    {
+        int path = INF;
+
+        for(v=t; v!=s; v=par[v])
+        {
+            u = par[v];
+            path = min(path,rg[u][v]);
+        }
+
+        for(v=t; v!=s; v=par[v])
+        {
+            u = par[v];
+            rg[u][v]-=path;
+            rg[v][u]+=path;
+        }
+
+        mx+=path;
+    }
+    return mx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Maximum Matching **/
+
+#include <bits/stdc++.h>
+
+#define rep(i,n) for(i=1;i<=n;i++)
+#define Rep(i,n) for(i=0;i<n;i++)
+#define For(i,a,b) for(i=a;i<=b;i++)
+
+#define pb(x) push_back(x)
+#define sz(x) x.size()
+
+#define mem(ara,val) memset(ara,val,sizeof(ara))
+#define eps 1e-9
+
+#define si(x) scanf("%d",&x)
+#define sii(x,y) scanf("%d %d",&x,&y)
+#define siii(x,y,z) scanf("%d %d %d",&x,&y,&z)
+#define sl(x) scanf("%lld",&x)
+#define sll(x,y) scanf("%lld %lld",&x,&y)
+#define slll(x,y,z) scanf("%lld %lld %lld",&x,&y,&z)
+#define ss(ch) scanf("%s",ch)
+#define pi(x) printf("%d",x)
+#define pii(x,y) printf("%d %d",x,y)
+#define piii(x,y,z) printf("%d %d %d",x,y,z)
+#define pl(x) printf("%lld",x)
+#define pll(x,y) printf("%lld %lld",x,y)
+#define plll(x,y,z) printf("%lld %lld %lld",x,y,z)
+#define ps(ch) printf("%s",ch)
+#define Afridi 0
+#define NL printf("\n")
+#define SP printf(" ")
+#define loj(x) printf("Case %d:",x)
+#define Loj(x) printf("Case %lld:",x)
+#define debug(str,x) cout << str << " " << x << endl;
+#define Max 1005
+#define INF INT_MAX
+
+typedef long long LL;
+typedef unsigned long long ULL;
+
+using namespace std;
+
+LL Left[Max],Right[Max];
+vector <LL> g[Max];
+LL n,m;
+bool visit[Max];
+
+bool dfs(LL u)
+{
+    if(visit[u] == 1)return false;
+    visit[u] = 1;
+    LL len = sz(g[u]),i;
+    for(i=0; i<len; i++)
+    {
+        LL v = g[u][i];
+        if(Right[v] == -1)
+        {
+            Left[u] = v;
+            Right[v] = u;
+            return true;
+        }
+    }
+    for(i=0; i<len; i++)
+    {
+        LL v = g[u][i];
+        if( dfs(Right[v]) )
+        {
+            Left[u] = v;
+            Right[v] = u;
+            return true;
+        }
+    }
+    return false;
+}
+
+LL bpm()
+{
+    mem(Left,-1);
+    mem(Right,-1);
+    LL i;
+    while(1)
+    {
+        bool f = 1;
+        mem(visit,0);
+        for(i=1; i<=n; i++)
+        {
+            if(Left[i] == -1 && dfs(i))
+            {
+                f = 0;
+            }
+        }
+        if(f)break;
+    }
+    LL cnt = 0;
+    for(i=1;i<=n;i++)
+    {
+        if(Left[i] != -1)cnt++;
+    }
+    return cnt;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Minimum Cost Maximum Flow **/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define Pot(u,v) (d[u] + pi[u] - pi[v])
+LL cap[Max][Max],cost[Max][Max];
+LL fnet[Max][Max],adj[Max][Max], deg[Max];
+LL par[Max], d[Max];
+LL pi[Max];
+LL n,m,s,t,fcost;
+
+bool dijkstra()
+{
+    LL i;
+    for(i = 0; i < n; i++ ) d[i] = INF, par[i] = -1;
+    d[s] = 0;
+    par[s] = -n - 1;
+
+    while( 1 )
+    {
+        LL u = -1, bestD = INF;
+        for(i = 0; i < n; i++ )
+        {
+            if( par[i] < 0 && d[i] < bestD )
+            {
+                bestD = d[u = i];
+            }
+        }
+        if( bestD == INF ) break;
+
+        par[u] = -par[u] - 1;
+        for(i = 0; i < deg[u]; i++ )
+        {
+            LL v = adj[u][i];
+            if( par[v] >= 0 ) continue;
+
+            if( fnet[v][u] && d[v] > Pot(u,v) - cost[v][u] )
+            {
+                d[v] = Pot( u, v ) - cost[v][u], par[v] = -u-1;
+            }
+            if( fnet[u][v] < cap[u][v] && d[v] > Pot(u,v) + cost[u][v] )
+            {
+                d[v] = Pot(u,v) + cost[u][v], par[v] = -u - 1;
+            }
+        }
+    }
+
+    for(i = 0; i < n; i++ )
+    {
+        if( pi[i] < INF )
+        {
+            pi[i] += d[i];
+        }
+    }
+
+    return par[t] >= 0;
+}
+
+LL mcmf3()
+{
+    mem(deg,0);
+    LL i,j;
+    for(i = 0; i < n; i++ )
+    {
+        for(j = 0; j < n; j++ )
+        {
+            if( cap[i][j] || cap[j][i] )
+            {
+                adj[i][deg[i]++] = j;
+            }
+        }
+    }
+
+    mem(fnet,0);
+    mem(pi,0);
+    LL flow = 0;
+    fcost = 0;
+
+    while( dijkstra() )
+    {
+        LL bot = INF;
+        for( LL v = t, u = par[v]; v != s; u = par[v = u] )
+        {
+            bot = min(bot,fnet[v][u] ? fnet[v][u] : ( cap[u][v] - fnet[u][v] ));
+        }
+
+        for( LL v = t, u = par[v]; v != s; u = par[v = u] )
+        {
+            if( fnet[v][u] )
+            {
+                fnet[v][u] -= bot;
+                fcost -= bot * cost[v][u];
+            }
+            else
+            {
+                fnet[u][v] += bot;
+                fcost += bot * cost[u][v];
+            }
+        }
+        flow += bot;
+    }
+
+    return flow;
+}
+
+///----------------- EXAMPLE USAGE -----------------
+
+int main()
+{
+    int numV;
+    ///  while ( cin >> numV && numV ) {
+    cin >> n;
+    mem(cap,0);mem(cost,0);
+
+    int m, a, b, c, cp;
+    cin >> m;
+    cin >> s >> t;
+    for (int i=0; i<m; i++)
+    {
+        cin >> a >> b >> cp >> c;
+        cost[a][b] = c; /// cost[b][a] = c;
+        cap[a][b] = cp; /// cap[b][a] = cp;
+    }
+
+    int flow = mcmf3();
+    cout << "flow: " << flow << endl;
+    cout << "cost: " << fcost << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Mobius **/
+
+bool check(LL x,LL d)
+{
+    if(x%d == 0)return 1;
+    return 0;
+}
+
+void sieve()
+{
+    LL i,j;
+    for(i=1; i<=10000000; i++)good[i] = 1;
+    pra[1] = 1;
+    for(i=2; i<=10000000; i++)
+    {
+        if(pra[i] == 0)
+        {
+            for(j=i; j<=10000000; j+=i)
+            {
+                divcnt[j]++;
+                if(i!=j)pra[j] = 1;
+                if(check(j/i,i))good[j] = 0;
+            }
+        }
+        if(divcnt[i] % 2 == 0)good[i] = -good[i];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Mod of string **/
+
+LL mod(char x[],LL a)
+{
+    LL i,m = 0,tot,len = strlen(x);
+    for(i=0;i<len;i++)
+    {
+        tot = m*10 + x[i] - 48;
+        m = tot % a;
+    }
+    return m;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Operator overload **/
+
+struct node
+{
+    LL u,w;
+    bool operator < (const node& p) const
+    {
+        return w < p.w;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Postfix and Result **/
+
+struct info
+{
+    bool opt;
+    char c;
+    LL val;
+    void make(bool x,char y,LL z)
+    {
+        opt = x;c = y;val = z;
+    }
+};
+info ara[Max];
+LL L;
+stack <info> st;
+vector <info> q;
+
+LL precedence(info A,info B)
+{
+    if(A.c == '+' || A.c == '-')
+    {
+        if(B.c == '+' || B.c == '-')return 0;
+        return -1;
+    }
+    else
+    {
+        if(B.c == '*' || B.c == '/')return 0;
+        return +1;
+    }
+}
+
+void postfix()
+{
+    while(!st.empty())st.pop();
+    q.clear();
+    info tmp;
+    tmp.make(1,')',0);
+    ara[L++] = tmp;
+    tmp.make(1,'(',0);
+    st.push(tmp);
+    for(LL i=0;i<L;i++)
+    {
+        if(ara[i].opt == 0)q.pb(ara[i]);
+        else
+        {
+            if(ara[i].c == '(')st.push(ara[i]);
+            else if(ara[i].c == ')')
+            {
+                while(1)
+                {
+                    tmp = st.top();
+                    st.pop();
+                    if(tmp.c == '(')break;
+                    q.pb(tmp);
+                }
+            }
+            else
+            {
+                while(!st.empty())
+                {
+                    tmp = st.top();
+                    if(tmp.c == '(' || tmp.c == ')')break;
+                    LL my = precedence(ara[i],tmp);
+                    if(my <= 0)
+                    {
+                        q.pb(tmp);
+                        st.pop();
+                    }
+                    else break;
+                }
+                st.push(ara[i]);
+            }
+        }
+    }
+}
+
+LL result()
+{
+    info tmp;
+    while(!st.empty())st.pop();
+    LL len = sz(q),i;
+    Rep(i,len)
+    {
+        info my = q[i];
+        if(my.opt == 0)st.push(my);
+        else
+        {
+            info A = st.top();st.pop();
+            info B = st.top();st.pop();
+            LL val;
+            if(my.c == '+')val = B.val + A.val;
+            if(my.c == '-')val = B.val - A.val;
+            if(my.c == '*')val = B.val * A.val;
+            if(my.c == '/')val = B.val / A.val;
+            tmp.make(0,0,val);
+            st.push(tmp);
+        }
+    }
+    return st.top().val;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Sieve **/
+
+void sieve()
+{
+    pra[1] = 1;
+    for(i=2; i*i<=100000; i++)
+    {
+        if(!pra[i])
+        {
+            for(j=i*i; j<=100000; j=j+i)pra[j] = 1;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** String x String **/
+
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    int c,len,i,f,k,h,s,x,j;
+    char a[2000],b[2000],ch[2000],num[4000];
+    while(scanf("%s %s",a,b)!=EOF)
+    {
+        c=0,j=0;
+        memset(ch,0,sizeof(ch));
+        len=strlen(a);
+
+        if(strlen(a)<strlen(b))
+        {
+            len=strlen(b);
+            for(i=0; i<len-strlen(a); i++)ch[i]='0';
+            strcat(ch,a);
+            strcpy(a,ch);
+        }
+
+        else
+        {
+            for(i=0; i<len-strlen(b); i++)ch[i]='0';
+            strcat(ch,b);
+            strcpy(b,ch);
+        }
+        memset(ch,0,sizeof(ch));
+        for(h=0,x=len-1,k=2*len-2,i=1; i<=len; i++,k--)
+        {
+            for(s=0,f=0; f<i; f++)
+            {
+                s+=(a[x-f]-48)*(b[k-x+f]-48);
+            }
+            s+=h;
+            ch[j++]=s%10+48;
+            h=s/10;
+        }
+        for(i=x; i>0; i--,k--)
+        {
+            for(s=0,f=0; f<i; f++)
+            {
+                s+=(a[f]-48)*(b[k-f]-48);
+            }
+            s+=h;
+            ch[j++]=s%10+48;
+            h=s/10;
+        }
+        for(i=0; h>0; i++)
+        {
+            ch[j++]=h%10+48;
+            h=h/10;
+        }
+        memset(num,0,sizeof(num));
+        for(h=0,c=0,i=0; i<j; i++)
+        {
+            if(ch[j-1-i]=='0' && c==0)continue;
+            num[h++]=ch[j-i-1];
+            c++;
+        }
+        if(strlen(num)==0)printf("0\n");
+        else printf("%s\n",num);
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/** SCC **/
+
+vector <LL> g[Max],ug[Max],sc[Max],cg[Max];
+bool visit[Max];
+stack <LL> st;
+LL idx,n,m,codx[Max];
+
+void dfs(LL u,LL f)
+{
+    visit[u] = 1;
+    LL len,i;
+    if(!f)len = sz(g[u]);
+    else len = sz(ug[u]);
+    Rep(i,len)
+    {
+        LL v;
+        if(!f)v = g[u][i];
+        else v = ug[u][i];
+        if(visit[v] == 0)dfs(v,f);
+    }
+    if(!f)st.push(u);
+    else
+    {
+        sc[idx].pb(u);
+        codx[u] = idx;
+    }
+}
+void go(LL u,LL c)
+{
+    LL len = sz(g[u]),i;
+    Rep(i,len)
+    {
+        LL v = g[u][i];
+        if(codx[v] != c)cg[c].pb(codx[v]);
+    }
+}
+void buildGraph()
+{
+    mem(visit,0);
+    LL i,j;
+    rep(i,idx)
+    {
+        LL len = sz(sc[i]);
+        if(len)sort(sc[i].begin(),sc[i].end());
+        Rep(j,len)
+        {
+            LL u = sc[i][j];
+            go(u,i);
+        }
+    }
+    ///compress
+    rep(i,idx)if(sz(cg[i]) > 0)sort(cg[i].begin(),cg[i].end());
+    rep(i,idx)
+    {
+        vector <LL> tmp;
+        tmp.clear();
+        LL prev = -1;
+        LL len = sz(cg[i]);
+        Rep(j,len)
+        {
+            LL u = cg[i][j];
+            if(u != prev)tmp.pb(u);
+            prev = u;
+        }
+        len = sz(tmp);
+        cg[i].clear();
+        Rep(j,len)cg[i].pb(tmp[j]);
+    }
+}
+
+
+
+int main()
+{
+    LL i,x,y;
+    sll(n,m);
+    rep(i,m)
+    {
+        sll(x,y);
+        g[x].pb(y);
+        ug[y].pb(x);
+    }
+    mem(visit,0);
+    rep(i,n)if(visit[i] == 0)dfs(i,0);
+    mem(visit,0);
+    idx = 0;
+    while(st.empty() == 0)
+    {
+        LL u = st.top();
+        st.pop();
+        if(visit[u] == 0)
+        {
+            idx++;
+            dfs(u,1);
+        }
+    }
+    buildGraph();
+    rep(i,idx)
+    {
+        LL len = sz(sc[i]),j;
+        Rep(j,len)printf("%lld ",sc[i][j]);
+        NL;
+    }
+    rep(i,idx)
+    {
+        LL len = sz(cg[i]),j;
+        Rep(j,len)printf("%lld -> %lld\n",i,cg[i][j]);
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/** Suffix Array **/
+
+struct node
+{
+    LL ind;
+    LL val[2];
+    bool operator < ( const node& p ) const
+    {
+        if(val[0] == p.val[0])
+        {
+            return val[1] < p.val[1];
+        }
+        else return val[0] < p.val[0];
+    }
+};
+node L[Max];
+LL P[18][Max],D,S,len;
+char str[Max];
+
+LL LCP(LL x,LL y)
+{
+    LL i,j,ans = 0;
+    if(x == y)return len - x;
+    for(i = D,j = S; j>=0 && x<len && y<len; i/=2,j--)
+    {
+        if(P[j][x] == P[j][y])
+        {
+            ans += i;
+            x += i;
+            y += i;
+        }
+    }
+    return ans;
+}
+
+void SA()
+{
+    LL i,d,stp;
+    Rep(i,len)P[0][i] = str[i] - 'a';
+    for(d=1,stp = 1; d<len; d*=2,stp++)
+    {
+        for(i=0;i<len;i++)
+        {
+            L[i].ind = i;
+            L[i].val[0] = P[stp - 1][i];
+            if(i+d < len)L[i].val[1] = P[stp - 1][i + d];
+            else L[i].val[1] = -1;
+        }
+        sort(L,L+len);
+        for(i=0;i<len;i++)
+        {
+            if(i > 0 && L[i].val[0] == L[i-1].val[0] && L[i].val[1] == L[i-1].val[1])
+            {
+                P[stp][ L[i].ind ] = P[stp][ L[i-1].ind ];
+            }
+            else P[stp][ L[i].ind ] = i;
+        }
+    }
+    D = d;
+    S = stp-1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Suffix Array Faster **/
+
+struct node
+{
+    LL ind;
+    LL val[2];
+    bool operator < ( const node& p ) const
+    {
+        if(val[0] == p.val[0])
+        {
+            return val[1] < p.val[1];
+        }
+        else return val[0] < p.val[0];
+    }
+};
+node L[Max];
+LL P[18][Max],D,S,len;
+char str[Max];
+
+LL LCP(LL x,LL y)
+{
+    LL i,j,ans = 0;
+    if(x == y)return len - x;
+    for(i = D,j = S; j>=0 && x<len && y<len; i/=2,j--)
+    {
+        if(P[j][x] == P[j][y])
+        {
+            ans += i;
+            x += i;
+            y += i;
+        }
+    }
+    return ans;
+}
+
+node Lsrt[Max];
+LL MX;
+LL cnt[Max],taken[Max],spcl,spcltaken,sum[Max];
+
+void Sort()
+{
+    int i,j,idx,l;
+
+    Rep(i,len)
+    {
+        LL my = L[i].val[1];
+        if(my == -1)spcl++;
+        else cnt[my]++;
+    }
+    sum[0] = spcl;
+    for(i=1;i<=MX;i++)
+    {
+        sum[i] = sum[i-1] + cnt[i-1];
+    }
+    Rep(i,len)
+    {
+        LL my = L[i].val[1];
+        if(my == -1)
+        {
+            spcltaken++;
+            Lsrt[ spcltaken-1 ] = L[i];
+        }
+        else
+        {
+            taken[my]++;
+            Lsrt[ sum[my] + taken[my]-1 ] = L[i];
+        }
+    }
+    spcl = spcltaken = 0;
+    for(i=0;i<=MX;i++)
+    {
+        taken[i] = cnt[i] = 0;
+    }
+
+    Rep(i,len)
+    {
+        LL my = Lsrt[i].val[0];
+
+        if(my == -1)spcl++;
+        else cnt[my]++;
+    }
+    sum[0] = spcl;
+    for(i=1;i<=MX;i++)
+    {
+        sum[i] = sum[i-1] + cnt[i-1];
+    }
+    Rep(i,len)
+    {
+        LL my = Lsrt[i].val[0];
+        if(my == -1)
+        {
+            spcltaken++;
+            L[ spcltaken-1 ] = Lsrt[i];
+        }
+        else
+        {
+            taken[my]++;
+            L[ sum[my] + taken[my]-1 ] = Lsrt[i];
+        }
+    }
+    spcl = spcltaken = 0;
+    for(i=0;i<=MX;i++)
+    {
+        taken[i] = cnt[i] = 0;
+    }
+}
+
+void SA()
+{
+    LL i,d,stp;
+    MX = 0;
+    Rep(i,len)
+    {
+        P[0][i] = str[i] - 'a';
+        MX = max(MX,P[0][i]);
+    }
+    for(d=1,stp = 1; d<len; d*=2,stp++)
+    {
+        for(i=0;i<len;i++)
+        {
+            L[i].ind = i;
+            L[i].val[0] = P[stp - 1][i];
+            if(i+d < len)L[i].val[1] = P[stp - 1][i + d];
+            else L[i].val[1] = -1;
+        }
+        Sort();
+        for(i=0;i<len;i++)
+        {
+            if(i > 0 && L[i].val[0] == L[i-1].val[0] && L[i].val[1] == L[i-1].val[1])
+            {
+                P[stp][ L[i].ind ] = P[stp][ L[i-1].ind ];
+            }
+            else P[stp][ L[i].ind ] = i;
+            MX = max(MX,P[stp][ L[i].ind ]);
+        }
+    }
+    D = d;
+    S = stp-1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Z - algo **/
+
+void zalgo()
+{
+    LL i,l,r;
+    l = r = 0;
+    for(i=1; i<n; i++)
+    {
+        if(i > r)
+        {
+            l = r = i;
+            while(r < n && str[r] == str[r-l])r++;
+            z[i] = r - l;
+            r--;
+        }
+        else
+        {
+            LL k = i - l;
+            if(z[k] < r-i+1)
+            {
+                z[i] = z[k];
+            }
+            else
+            {
+                l = i;
+                while(r < n && str[r] == str[r-l])r++;
+                z[i] = r - l;
+                r--;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/** iiSAT **/
+
+vector <LL> g[Max],ug[Max],sc[Max],cg[Max];
+bool visit[Max];
+stack <LL> st;
+LL idx,n,m,codx[Max];
+
+void dfs(LL u,LL f)
+{
+    visit[u] = 1;
+    LL len,i;
+    if(!f)len = sz(g[u]);
+    else len = sz(ug[u]);
+    Rep(i,len)
+    {
+        LL v;
+        if(!f)v = g[u][i];
+        else v = ug[u][i];
+        if(visit[v] == 0)dfs(v,f);
+    }
+    if(!f)st.push(u);
+    else
+    {
+        sc[idx].pb(u);
+        codx[u] = idx;
+    }
+}
+void go(LL u,LL c)
+{
+    LL len = sz(g[u]),i;
+    Rep(i,len)
+    {
+        LL v = g[u][i];
+        if(codx[v] != c)cg[c].pb(codx[v]);
+    }
+}
+void buildGraph()
+{
+    mem(visit,0);
+    LL i,j;
+    rep(i,idx)
+    {
+        LL len = sz(sc[i]);
+        if(len)sort(sc[i].begin(),sc[i].end());
+        Rep(j,len)
+        {
+            LL u = sc[i][j];
+            go(u,i);
+        }
+    }
+    ///compress
+    rep(i,idx)if(sz(cg[i]) > 0)sort(cg[i].begin(),cg[i].end());
+    rep(i,idx)
+    {
+        vector <LL> tmp;
+        tmp.clear();
+        LL prev = -1;
+        LL len = sz(cg[i]);
+        Rep(j,len)
+        {
+            LL u = cg[i][j];
+            if(u != prev)tmp.pb(u);
+            prev = u;
+        }
+        len = sz(tmp);
+        cg[i].clear();
+        Rep(j,len)cg[i].pb(tmp[j]);
+    }
+}
+
+bool ret;
+LL slol[Max];
+void cdfs(LL u)
+{
+    visit[u] = 1;
+    LL len = sz(cg[u]),i;
+    Rep(i,len)
+    {
+        LL v = cg[u][i];
+        if(visit[v] == 0)cdfs(v);
+    }
+    st.push(u);
+}
+void iiSAT()
+{
+    LL i,j;
+    rep(i,n)
+    {
+        if(codx[2*i]  == codx[2*i-1])
+        {
+            ret = 0;
+            return;
+        }
+    }
+    ret = 1;
+    mem(visit,0);
+    rep(i,idx)if(visit[i] == 0)cdfs(i);
+    mem(slol,-1);
+    vector <LL> v;
+    v.clear();
+    while(st.empty() == 0)
+    {
+        v.pb(st.top());
+        st.pop();
+    }
+    LL vlen = sz(v);
+    for(i=vlen-1; i>=0; i--)
+    {
+        LL u = v[i];
+        LL len = sz(sc[u]);
+        LL my = 1;
+        Rep(j,len)
+        {
+            LL v = sc[u][j];
+            LL d = (v+1)/2;
+            if(slol[d] == -1)continue;
+            if(v & 1)
+            {
+                if(slol[d] == 0)
+                {
+                    my = 0;
+                    break;
+                }
+            }
+            else
+            {
+                if(slol[d] == 1)
+                {
+                    my = 0;
+                    break;
+                }
+            }
+        }
+        Rep(j,len)
+        {
+            LL v = sc[u][j];
+            LL d = (v+1)/2;
+            if(v & 1)slol[d] = my;
+            else slol[d] = 1 - my;
+        }
+    }
+}
+
+int main()
+{
+    /// (A or B)
+    /// !A -> B
+    /// !B -> A
+    /// SCC
+    /// compress
+    /// call iiSAT
+    /// if(A and !A == same)ret = 0;
+    /// else slol gives the solution
+}
